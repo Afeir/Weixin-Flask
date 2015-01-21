@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from flask import Flask,  make_response
+from flask import Flask,  make_response, request
 from config import CONFIG
 import json
 import random
@@ -128,15 +128,23 @@ def all_in_one():
     _time_stamp = int(time.time())
     _random_str = _ge_nonce_str()
     _js_ticket = current_token_ticket.ticket
+    _url = request.host_url[:-1]  # 去除/
 
     return json_response({
         'appId': CONFIG['app_id'],
         'timestamp': _time_stamp,
         'nonceStr': _random_str,
-        'signature': _sign_ticket(_random_str, _js_ticket, _time_stamp, "http://www.baidu.com"),
-        'url': 'http://www.baidu.com'  # POST过来什么,返回什么
+        'signature': _sign_ticket(_random_str, _js_ticket, _time_stamp, _url),
+        'url': _url  # POST过来什么,返回什么
     })
+
+
+def _detect_request():
+    with app.test_request_context('/all', method=['POST', 'GET']):
+        print dir(request)
+        print request.host_url
 
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0")
+    # _detect_request()
