@@ -76,6 +76,7 @@ def json_response(res):
     else:
         json_response_body = make_response(res)
     json_response_body.headers['Content-Type'] = "application/json;charset=UTF-8"  # 设置
+    # json_response_body.headers['Access-Control-Allow-Origin'] = "*"  # 跨域
     return json_response_body
 
 
