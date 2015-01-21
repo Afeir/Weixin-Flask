@@ -1,2 +1,5 @@
-# Weixin-Flask
-微信js-sdk的后端签名等中置服务flask版
+#### 安装以及部署
+
+#### 感谢
+
+![Flask](./imgs/flask.png)
